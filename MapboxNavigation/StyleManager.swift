@@ -187,7 +187,7 @@ open class StyleManager: NSObject {
     }
     
     func forceRefreshAppearance() {
-        for window in UIApplication.shared.windows {
+        for window in UIApplication.shared.applicationWindows {
             for view in window.subviews {
                 view.removeFromSuperview()
                 window.addSubview(view)
@@ -195,6 +195,15 @@ open class StyleManager: NSObject {
         }
         
         self.delegate?.styleManagerDidRefreshAppearance?(self)
+    }
+}
+
+extension UIApplication {
+    var applicationWindows: [UIWindow] {
+        windows.filter { window in
+            let className = String(describing: type(of: window))
+            return !className.contains("UIRemoteKeyboardWindow")
+        }
     }
 }
 
