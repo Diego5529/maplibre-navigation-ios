@@ -202,7 +202,8 @@ extension UIApplication {
     var applicationWindows: [UIWindow] {
         windows.filter { window in
             let className = String(describing: type(of: window))
-            return !className.contains("UIRemoteKeyboardWindow")
+            return !className.contains("UIRemoteKeyboardWindow") &&
+            !className.contains("UIAlertController")
         }
     }
 }
